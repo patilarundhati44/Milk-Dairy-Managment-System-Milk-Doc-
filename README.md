@@ -22,9 +22,7 @@ The system is menu-driven, offering a simple interface to manage dairy operation
 - Delete Milk Record :    Delete any specific milk record using ID.
 - Record Payment     :    Log payment given to milk providers.
 - Calculate Total Payment    :    Show total payable amount to a provider.
-- Check Pending Payment :    Calculate remaining payment after deduction.
 - Monthly Summary   :    Display total milk and amount for a specific month.
-- Supplier of the Day:    Get the highest milk supplier for a selected date.
 - Menu-Driven Interface:    Easy-to-use console-based menu for user navigation.
 
 ---
@@ -86,6 +84,10 @@ CREATE TABLE payment (
 );
 ```
 ---
+
+Image 
+
+
 
 ## Contact
 For any questions or feedback, feel free to reach out:
