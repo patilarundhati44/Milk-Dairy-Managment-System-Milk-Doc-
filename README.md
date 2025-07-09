@@ -87,9 +87,8 @@ CREATE TABLE payment (
 
 Image 
 
-## 📸 Screenshot
+## 📸 Screenshot![Screenshot 2025-07-09 193754](https://github.com/user-attachments/assets/8c161f3c-8ffc-4a88-9696-a74c95d67ced)
 
-![MilkDoc Console Output](images/Screenshot_2025-07-09_193754.png)
 
 ---
 
