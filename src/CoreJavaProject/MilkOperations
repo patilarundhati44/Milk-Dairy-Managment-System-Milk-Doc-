@@ -1,0 +1,240 @@
+class MilkOperations 
+
+{
+ Scanner sc = new Scanner(System.in);
+
+ public void addMilkProvider() 
+ 
+ {
+     try (Connection con = DBConnection.getConnection())
+     
+     {
+         System.out.print("Enter  Name: ");
+         String name = sc.nextLine();
+         
+         System.out.print("Enter Contact: ");
+         String contact = sc.nextLine();
+         
+         System.out.print("Enter Address: ");
+         String address = sc.nextLine();
+         
+         String sql = "insert into milk_provider (name, contact, address) values (?, ?, ?)";
+         PreparedStatement ps = con.prepareStatement(sql);
+         
+         ps.setString(1, name);
+         ps.setString(2, contact);
+         ps.setString(3, address);
+         ps.executeUpdate();
+         System.out.println("Milk Provider Added Successfully!");
+     } 
+     catch (SQLException e) 
+     { 
+    	 e.printStackTrace(); 
+    	 
+     }
+ }
+
+public void addMilkRecord() 
+ {
+     try (Connection con = DBConnection.getConnection())
+     
+     {
+         System.out.print("Enter Provider ID: ");
+         int providerId = sc.nextInt(); 
+         sc.nextLine();
+         
+         System.out.print("Enter Date : "); 
+         String date = sc.nextLine();
+         
+         System.out.print("Enter Quantity: "); 
+         double qty = sc.nextDouble();
+         
+         System.out.print("Enter Fat Content: "); 
+         double fat = sc.nextDouble();
+         
+         System.out.print("Enter Rate/Litre: "); 
+         double rate = sc.nextDouble();
+         
+         
+         String sql = "insert into milk_record (provider_id, date, quantity, fat_content, rate_per_litre) values(?, ?, ?, ?, ?)";
+         PreparedStatement ps = con.prepareStatement(sql);
+         
+         ps.setInt(1, providerId); 
+         ps.setDate(2, Date.valueOf(date));
+         
+         ps.setDouble(3, qty);
+         ps.setDouble(4, fat);
+         ps.setDouble(5, rate);
+         ps.executeUpdate();
+         
+         System.out.println("Milk Record Added Successfully!");
+     } 
+     catch (SQLException e) 
+     
+     { 
+    	 e.printStackTrace(); 
+    	 
+     }
+ }
+
+ public void calculateTotalPayment()
+ {
+     try (Connection con = DBConnection.getConnection())
+     
+     {
+         System.out.print("Enter Provider ID: "); 
+         int pid = sc.nextInt();
+         sc.nextLine();
+         
+         String sql = "select sum(quantity * rate_per_litre) AS total_payment from milk_record where provider_id = ?";
+         PreparedStatement ps = con.prepareStatement(sql);
+         
+         ps.setInt(1, pid);
+         ResultSet rs = ps.executeQuery();
+         
+         if (rs.next()) 
+        	 
+        	 System.out.println("Total Payment is:" + rs.getDouble("total_payment"));
+     } 
+     
+     catch (SQLException e) 
+     { 
+    	 e.printStackTrace(); 
+     }
+ }
+
+
+ public void showAllProviders() 
+
+ {
+     try (Connection con = DBConnection.getConnection())
+     {
+         Statement stmt = con.createStatement();
+         ResultSet rs = stmt.executeQuery("SELECT * FROM milk_provider");
+
+         while (rs.next())
+             System.out.println(rs.getInt("provider_id") + " - " + rs.getString("name") + " | " + rs.getString("contact") + " | " + rs.getString("address"));
+     } 
+     catch (SQLException e) 
+     { 
+    	 e.printStackTrace(); 
+     }
+ }
+
+
+ public void recordPayment()
+ {
+     try (Connection con = DBConnection.getConnection()) 
+     {
+         System.out.print("Enter Provider ID: ");
+         int pid = sc.nextInt();
+         
+         System.out.print("Enter Amount: ");
+         double amt = sc.nextDouble();
+         sc.nextLine();
+         
+         System.out.print("Enter Payment Date : ");
+         String date = sc.nextLine();
+         
+         String sql = "insert into payment (provider_id, amount, payment_date) values (?, ?, ?)";
+         PreparedStatement ps = con.prepareStatement(sql);
+         
+         ps.setInt(1, pid); 
+         ps.setDouble(2, amt);
+         ps.setDate(3, Date.valueOf(date));
+         ps.executeUpdate();
+         
+         System.out.println("Payment Recorded Successfully!");
+     } 
+     catch (SQLException e) 
+     {
+    	 e.printStackTrace();
+     }
+ }
+
+
+ public void updateMilkRecord()
+ {
+     try (Connection con = DBConnection.getConnection()) 
+     
+     {
+         System.out.print("Enter Record ID: ");
+         int rid = sc.nextInt();
+         
+         System.out.print("Enter New Quantity: ");
+         double qty = sc.nextDouble();
+         
+         System.out.print("Enter New Fat Content: "); 
+         double fat = sc.nextDouble();
+         
+         System.out.print("Enter New Rate/Litre: ");
+         double rate = sc.nextDouble();
+         
+         String sql = "update milk_record set quantity=?, fat_content=?, rate_per_litre=? WHERE record_id=?";
+         PreparedStatement ps = con.prepareStatement(sql);
+         
+         ps.setDouble(1, qty); 
+         ps.setDouble(2, fat);
+         ps.setDouble(3, rate);
+         ps.setInt(4, rid);
+         
+         System.out.println(ps.executeUpdate() > 0 ? "Record Updated Successfully!" : "Record Not Found!");
+     } 
+     
+     catch (SQLException e)
+     
+     {
+    	 e.printStackTrace(); 
+     }
+ }
+
+public void deleteMilkRecord() 
+ {
+     try (Connection con = DBConnection.getConnection())
+     {
+         System.out.print("Enter Record ID to Delete: ");
+         int rid = sc.nextInt();
+         
+         String sql = "delete from milk_record WHERE record_id=?";
+         PreparedStatement ps = con.prepareStatement(sql);
+         ps.setInt(1, rid);
+         
+         System.out.println(ps.executeUpdate() > 0 ? "Record Deleted!" : "Record Not Found!");
+     } 
+     catch (SQLException e)
+     
+     { 
+    	 e.printStackTrace();
+     }
+ }
+
+
+ public void monthlySummary() 
+ {
+     try (Connection con = DBConnection.getConnection())
+     
+     {
+         System.out.print("Enter Provider ID: "); 
+         int pid = sc.nextInt(); 
+         sc.nextLine();
+         
+         System.out.print("Enter Month (YYYY-MM): ");
+         String month = sc.nextLine();
+         
+         String sql = "select sum(quantity) as total_qty, SUM(quantity * rate_per_litre) AS total_amt FROM milk_record WHERE provider_id = ? AND TO_CHAR(date, 'YYYY-MM') = ?";
+         PreparedStatement ps = con.prepareStatement(sql);
+         
+         ps.setInt(1, pid);
+         ps.setString(2, month);
+         
+         ResultSet rs = ps.executeQuery();
+         if (rs.next()) 
+         {
+             System.out.println("Total Qty: " + rs.getDouble("total_qty") + ", Total Amount: ₹" + rs.getDouble("total_amt"));
+         }
+     } 
+     catch (SQLException e) 
+     {
+    	 e.printStackTrace();
+     }
+ }
