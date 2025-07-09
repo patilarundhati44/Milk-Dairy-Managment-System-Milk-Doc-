@@ -87,7 +87,11 @@ CREATE TABLE payment (
 
 Image 
 
+## 📸 Screenshot
 
+![MilkDoc Console Output](images/Screenshot_2025-07-09_193754.png)
+
+---
 
 ## Contact
 For any questions or feedback, feel free to reach out:
