@@ -1,0 +1,23 @@
+package CoreJavaProject;
+
+class MilkProvider 
+
+{
+ int id;
+ String name, contact, address;
+
+ public MilkProvider(String name, String contact, String address) 
+ 
+ {
+     this.name = name; 
+     this.contact = contact; 
+     this.address = address;
+ }
+ 
+ public MilkProvider(int id, String name, String contact, String address) 
+ 
+ {
+     this(name, contact, address);
+     this.id = id;
+ }
+}
