@@ -1,0 +1,144 @@
+public class MainApp
+{
+ public static void main(String[] args) 
+ {
+     MilkOperations op = new MilkOperations();
+     Scanner sc = new Scanner(System.in);
+
+     while (true)
+     
+     {
+         System.out.println("\n--- Welcome Into The MilkDoc Menu ---");
+         System.out.println("1. Add Milk Provider");
+         System.out.println("2. Add Milk Record");
+         System.out.println("3. Calculate Total Payment");
+         System.out.println("4. Show All Providers");
+         System.out.println("5. Record Payment");
+         System.out.println("6. Update Milk Record");
+         System.out.println("7. Delete Milk Record");
+         System.out.println("8. Monthly Summary Report");  
+         System.out.println("9. Exit");
+         System.out.print("Enter choice: ");
+         
+         int ch = sc.nextInt();
+         switch (ch) 
+         
+       {
+         case 1:
+             Thread t1 = new Thread(() -> op.addMilkProvider());
+             t1.start();
+             try 
+             { 
+                 t1.join();
+             } 
+             catch (InterruptedException e)
+             { 
+                 e.printStackTrace(); 
+             }
+             break;
+             
+         case 2:
+             Thread t2 = new Thread(() -> op.addMilkRecord());
+             t2.start();
+             try 
+             { 
+                 t2.join();
+             } 
+             catch (InterruptedException e)
+             { 
+                 e.printStackTrace(); 
+             }
+             break;
+             
+         case 3:
+             Thread t3 = new Thread(() -> op.calculateTotalPayment());
+             t3.start();
+             try 
+             { 
+                 t3.join();
+             } 
+             catch (InterruptedException e)
+             { 
+                 e.printStackTrace(); 
+             }
+             break;
+             
+         case 4:
+             Thread t4 = new Thread(() -> op.showAllProviders());
+             t4.start();
+             try 
+             { 
+                 t4.join();
+             } 
+             catch (InterruptedException e)
+             { 
+                 e.printStackTrace(); 
+             }
+             break;
+             
+         case 5:
+             Thread t5 = new Thread(() -> op.recordPayment());
+             t5.start();
+             try 
+             { 
+                 t5.join();
+             } 
+             catch (InterruptedException e)
+             { 
+                 e.printStackTrace(); 
+             }
+             break;
+             
+         case 6:
+             Thread t6 = new Thread(() -> op.updateMilkRecord());
+             t6.start();
+             try 
+             { 
+                 t6.join();
+             } 
+             catch (InterruptedException e)
+             { 
+                 e.printStackTrace(); 
+             }
+             break;
+             
+         case 7:
+             Thread t7 = new Thread(() -> op.deleteMilkRecord());
+             t7.start();
+             try 
+             { 
+                 t7.join();
+             } 
+             catch (InterruptedException e)
+             { 
+                 e.printStackTrace(); 
+             }
+             break;
+             
+      
+             
+         case 8:
+             Thread t8 = new Thread(() -> op.monthlySummary());
+             t8.start();
+             try 
+             { 
+                 t8.join();
+             } 
+             catch (InterruptedException e)
+             { 
+                 e.printStackTrace(); 
+             }
+             break;
+             
+         case 9:
+             System.out.println("Thank you!");
+             return;
+             
+         default:
+             System.out.println("Invalid Choice!");
+             break;
+     }
+
+     }
+ }
+}
