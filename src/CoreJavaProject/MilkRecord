@@ -1,0 +1,18 @@
+package CoreJavaProject;
+
+class MilkRecord
+{
+ int providerId;
+ String date;
+ double quantity, fatContent, ratePerLitre;
+
+ public MilkRecord(int providerId, String date, double quantity, double fatContent, double ratePerLitre) 
+ 
+ {
+     this.providerId = providerId; 
+     this.date = date;
+     this.quantity = quantity;
+     this.fatContent = fatContent;
+     this.ratePerLitre = ratePerLitre;
+ }
+}
